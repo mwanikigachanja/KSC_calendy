@@ -7,7 +7,7 @@ scheduled_posts_data = []
 
 # Function to display the calendar
 def display_calendar():
-    st.title('Social Media Calendar App')
+    st.title('KSC Corporate Calender')
     st.sidebar.header('Navigation')
 
     # Display a simple calendar for the current month
