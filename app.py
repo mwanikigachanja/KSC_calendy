@@ -14,15 +14,7 @@ def display_calendar():
     today = datetime.today()
     current_month = today.strftime('%B %Y')
     st.header(current_month)
-
-    # Create a dataframe with dummy data for demonstration
-    data = {'Date': pd.date_range(start=today, periods=30),
-            'Posts': [3, 2, 4, 1, 5, 3, 2, 4, 3, 2, 1, 3, 2, 4, 5, 3, 2, 1, 4, 3, 2, 5, 4, 2, 3, 2, 1, 4, 3, 2]}
-    df = pd.DataFrame(data)
     
-    # Display the calendar
-    st.write(df)
-
 # Function to create new posts
 def create_post():
     st.title('Create New Post')
