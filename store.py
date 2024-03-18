@@ -29,9 +29,9 @@ def input_marketing_strategy():
 
     # Input fields for strategy details
     date = st.date_input('Date', datetime.today())
-    strategy_details = st.text_area('Strategy Details')
-    target_audience = st.text_input('Target Audience')
-    platform = st.selectbox('Platform', ['Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'Other'])
+    strategy_details = st.text_area('Strategy Details', help="Enter details of your marketing strategy")
+    target_audience = st.text_input('Target Audience', help="Specify the target audience for your strategy")
+    platform = st.selectbox('Platform', ['Facebook', 'Instagram', 'Twitter', 'LinkedIn', 'Other'], help="Select the platform for your strategy")
     # Add any other relevant fields here
 
     # Button to submit the strategy
