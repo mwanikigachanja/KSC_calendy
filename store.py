@@ -23,7 +23,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 
 # Function to input marketing strategy
-def input_marketing_strategy(calendar):
+def input_marketing_strategy():
     st.title('Input Marketing Strategy')
     st.write('Please fill in the details below to input your digital marketing strategy for the week.')
 
@@ -40,9 +40,6 @@ def input_marketing_strategy(calendar):
         save_strategy(date, strategy_details, target_audience, platform)
         st.success('Strategy Submitted Successfully!')
 
-        # Merge strategy into the calendar
-        merge_strategy_into_calendar(calendar, date, strategy_details, target_audience, platform)
-
 # Function to save strategy data to the database
 def save_strategy(date, strategy_details, target_audience, platform):
     session = Session()
@@ -51,22 +48,48 @@ def save_strategy(date, strategy_details, target_audience, platform):
     session.commit()
     session.close()
 
-# Function to merge marketing strategy into the calendar
-def merge_strategy_into_calendar(calendar, date, strategy_details, target_audience, platform):
-    # Logic to merge the marketing strategy into the calendar goes here
-    # This could involve adding an event to the calendar or updating an existing event
-    # For demonstration purposes, we'll just print the details
-    print(f'Merging marketing strategy into calendar:')
-    print(f'Date: {date}')
-    print(f'Strategy Details: {strategy_details}')
-    print(f'Target Audience: {target_audience}')
-    print(f'Platform: {platform}')
+# Function to import marketing strategies into the calendar
+def import_marketing_strategies(calendar_data):
+    session = Session()
+    strategies = session.query(MarketingStrategy).all()
+    session.close()
+
+    for strategy in strategies:
+        strategy_date = strategy.date.strftime('%Y-%m-%d')
+        if strategy_date not in calendar_data:
+            calendar_data[strategy_date] = []
+        calendar_data[strategy_date].append({
+            'type': 'marketing_strategy',
+            'details': strategy.strategy_details,
+            'target_audience': strategy.target_audience,
+            'platform': strategy.platform
+        })
+
+    return calendar_data
+
+# Function to authenticate users (for access control)
+def authenticate(username, password):
+    # Example authentication logic (replace with your actual logic)
+    authorized_users = {'marketing_user': 'password123'}
+    if username in authorized_users and authorized_users[username] == password:
+        return True
+    return False
 
 # Main function to run the app
 def main():
-    # Simulate passing the calendar object to the input_marketing_strategy function
-    calendar = None
-    input_marketing_strategy(calendar)
+    # Authenticate user
+    username = st.sidebar.text_input('Username')
+    password = st.sidebar.text_input('Password', type='password')
+    if st.sidebar.button('Login'):
+        if authenticate(username, password):
+            st.sidebar.success('Login successful!')
+            # Continue with app functionality
+            calendar_data = {}
+            calendar_data = import_marketing_strategies(calendar_data)
+            # Display calendar with marketing strategies
+            st.write(calendar_data)
+        else:
+            st.sidebar.error('Invalid username or password')
 
 if __name__ == "__main__":
     main()
