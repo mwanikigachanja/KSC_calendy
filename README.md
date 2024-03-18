@@ -39,6 +39,7 @@ streamlit run social_media_calendar.py
 ## Contributing
 
 Contributions are welcome! If you have any ideas, suggestions, or improvements, feel free to open an issue or create a pull request.
+Author: Charles Mwaniki 
 
 ## License
 
