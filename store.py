@@ -23,7 +23,7 @@ Base.metadata.create_all(engine)
 Session = sessionmaker(bind=engine)
 
 # Function to input marketing strategy
-def input_marketing_strategy():
+def input_marketing_strategy(calendar):
     st.title('Input Marketing Strategy')
     st.write('Please fill in the details below to input your digital marketing strategy for the week.')
 
@@ -40,6 +40,9 @@ def input_marketing_strategy():
         save_strategy(date, strategy_details, target_audience, platform)
         st.success('Strategy Submitted Successfully!')
 
+        # Merge strategy into the calendar
+        merge_strategy_into_calendar(calendar, date, strategy_details, target_audience, platform)
+
 # Function to save strategy data to the database
 def save_strategy(date, strategy_details, target_audience, platform):
     session = Session()
@@ -48,9 +51,22 @@ def save_strategy(date, strategy_details, target_audience, platform):
     session.commit()
     session.close()
 
+# Function to merge marketing strategy into the calendar
+def merge_strategy_into_calendar(calendar, date, strategy_details, target_audience, platform):
+    # Logic to merge the marketing strategy into the calendar goes here
+    # This could involve adding an event to the calendar or updating an existing event
+    # For demonstration purposes, we'll just print the details
+    print(f'Merging marketing strategy into calendar:')
+    print(f'Date: {date}')
+    print(f'Strategy Details: {strategy_details}')
+    print(f'Target Audience: {target_audience}')
+    print(f'Platform: {platform}')
+
 # Main function to run the app
 def main():
-    input_marketing_strategy()
+    # Simulate passing the calendar object to the input_marketing_strategy function
+    calendar = None
+    input_marketing_strategy(calendar)
 
 if __name__ == "__main__":
     main()
